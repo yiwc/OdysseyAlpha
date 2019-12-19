@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1207</width>
+    <height>965</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>YOLO-DEPTH Grap System (Author: Chen Yiwen cywgoog@gmail.com)</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>40</y>
+      <width>691</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="title">
+     <string>Camera Reading Data</string>
+    </property>
+    <widget class="QWidget" name="formLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>701</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="1" column="0">
+       <widget class="QLabel" name="Cam_iiwa_label_title">
+        <property name="text">
+         <string>IIwa</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="Cam_iiwa_label_content_label">
+        <property name="text">
+         <string>Wating for Data</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="Cam_bottle_label_title">
+        <property name="text">
+         <string>Bottle</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="Cam_bottle_label_content_label">
+        <property name="text">
+         <string>Wating for Data</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="Cam_cube_label_title">
+        <property name="text">
+         <string>Cube</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="Cam_cube_label_content_label">
+        <property name="text">
+         <string>Wating for Data</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="Cam_f_title">
+        <property name="text">
+         <string>F/hz</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="Cam_f_cont">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="Cam_hand_label_title">
+        <property name="text">
+         <string>Hand</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLabel" name="Cam_hand_label_content_label">
+        <property name="text">
+         <string>Wating for Data</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="CamImgGroup">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>230</y>
+      <width>681</width>
+      <height>431</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Camera Image</string>
+    </property>
+    <widget class="QLabel" name="CamCVImageLabel">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>30</y>
+       <width>671</width>
+       <height>361</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>CV</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="DetectedItemsLabel">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>80</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Detected Items </string>
+    </property>
+   </widget>
+   <widget class="QListView" name="DetectedListView">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>100</y>
+      <width>241</width>
+      <height>351</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>30</y>
+      <width>111</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Connect IIWA</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Mission2Button">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>530</y>
+      <width>241</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Do Mission2</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="M1TitleLabel">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>460</y>
+      <width>251</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Mission 1 Obj Grasp&amp;Place </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="M2TitleLabel">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>510</y>
+      <width>251</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
+     </font>
+    </property>
+    <property name="text">
+     <string>Mission 2 Hand Tracking</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Mission1Button">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>480</y>
+      <width>241</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Do Mission1</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="MissionAbsortButton">
+    <property name="geometry">
+     <rect>
+      <x>1060</x>
+      <y>480</y>
+      <width>141</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>20</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255,120,0);</string>
+    </property>
+    <property name="text">
+     <string>STOP</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>550</y>
+      <width>241</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+      <underline>true</underline>
+     </font>
+    </property>
+    <property name="text">
+     <string>Attention: 
+Be Sure Only one hand  in camera</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ControlRecoverButton">
+    <property name="geometry">
+     <rect>
+      <x>1060</x>
+      <y>570</y>
+      <width>141</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Recover</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="M3TitleLabel">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>600</y>
+      <width>251</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
+     </font>
+    </property>
+    <property name="text">
+     <string>Mission 3 Fetch Obj for Me</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Mission3Button">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>620</y>
+      <width>241</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Do Mission3</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="Mission2KeepcheckBox">
+    <property name="geometry">
+     <rect>
+      <x>880</x>
+      <y>560</y>
+      <width>151</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Keeping Tracking</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Mission4Button">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>670</y>
+      <width>241</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Do Mission4</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="M4TitleLabel">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>650</y>
+      <width>251</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
+     </font>
+    </property>
+    <property name="text">
+     <string>Mission 4 Hand Remote Control</string>
+    </property>
+   </widget>
+   <zorder>CamImgGroup</zorder>
+   <zorder>groupBox</zorder>
+   <zorder>DetectedItemsLabel</zorder>
+   <zorder>DetectedListView</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>Mission2Button</zorder>
+   <zorder>M1TitleLabel</zorder>
+   <zorder>M2TitleLabel</zorder>
+   <zorder>Mission1Button</zorder>
+   <zorder>MissionAbsortButton</zorder>
+   <zorder>label</zorder>
+   <zorder>ControlRecoverButton</zorder>
+   <zorder>M3TitleLabel</zorder>
+   <zorder>Mission3Button</zorder>
+   <zorder>Mission2KeepcheckBox</zorder>
+   <zorder>Mission4Button</zorder>
+   <zorder>M4TitleLabel</zorder>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1207</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

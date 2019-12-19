@@ -1,0 +1,5 @@
+classes= 4
+train  = data/train_4.txt
+valid  = data/test.txt
+names = gripper_4.names
+backup = backup/
