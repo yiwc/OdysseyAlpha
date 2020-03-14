@@ -287,45 +287,99 @@ def getObjectDepth_Nearest(depth, bounds):
     bound_depth[np.isnan(bound_depth)] = 999
 
     depth[np.isnan(depth)] = 999
-    for j in range(int(bounds[0] - bounds[2]/2), int(bounds[0] + bounds[2]/2)-10):
-        for i in range(int(bounds[1] - bounds[3]/2), int(bounds[1] + bounds[3]/2)-10):
-            z_new = depth[i, j, 2]
-            if(i>=depth.shape[0] or j>=depth.shape[1]):
+
+    # for j in range(int(bounds[0] - bounds[2]/2), int(bounds[0] + bounds[2]/2)):
+    #     for i in range(int(bounds[1] - bounds[3]/2), int(bounds[1] + bounds[3]/2)):
+
+
+
+    row_central=bounds[1]
+    col_central=bounds[0]
+    h=bounds[3]
+    w=bounds[2]
+    row_range=[int(row_central-h/2),int(row_central+h/2)]
+    col_range=[int(col_central-w/2),int(col_central+w/2)]
+    for i in range(2):
+        row_range[i]=clamp_row_index(row_range[i])
+        col_range[i]=clamp_col_index(col_range[i])
+    for c in range(col_range[0], col_range[1]):
+        for r in range(row_range[0], row_range[1]):
+            z_new = depth[r, c, 2]
+            if(r>=depth.shape[0] or c>=depth.shape[1]):
                 continue
             if(z_new<z and z_new!=-1):
                 z=z_new
-                x=depth[i, j, 0]
-                y=depth[i, j, 1]
-                coor=[i,j]
+                x=depth[r, c, 0]
+                y=depth[r, c, 1]
+                coor=[r,c]
 
-
-    # bound_depth=np.nan_to_num(bound_depth)
-    # bound_depth[np.isnan(bound_depth)] = 999
-    # bound_depth_z=bound_depth[:,:,2]
-    # z=np.min(bound_depth_z)
-    # x=bound_depth[round(bound_depth.shape[0]/2),round(bound_depth.shape[1]/2),0]
-    # y=bound_depth[round(bound_depth.shape[0]/2),round(bound_depth.shape[1]/2),1]
-    # print(z,bound_depth.shape)
-    # print(bound_depth.shape)
-
-            # if not np.isnan(z) and not np.isinf(z):
-            #     x_vect.append(depth[i, j, 0])
-            #     y_vect.append(depth[i, j, 1])
-            #     z_vect.append(z)
-    # try:
-    #     x = statistics.median(x_vect)
-    #     y = statistics.median(y_vect)
-    #     z = statistics.median(z_vect)
-    # except Exception:
-    #     x = -1
-    #     y = -1
-    #     z = -1
-    #     pass
 
     if(x==999 or y==999 or z==999):
-        return -1,-1,-1
-
+        return -1,-1,-1, coor
+    print(bounds)
+    # print(getObjectDepth_2d_av_Centroid(depth,bound_depth,5))
     return x, y, z,coor
+
+def clamp_row_index(row_index):
+    return np.clip(row_index,a_min=1,a_max=719)
+def clamp_col_index(col_index):
+    return np.clip(col_index,a_min=1,a_max=1279)
+
+def clamp_img_point(coor):
+    return [clamp_row_index(coor[0]),clamp_col_index(coor[1])]
+
+def getObjectDepth_2d_av_Centroid(depth,bounds,deep):# bounds:550,335,179,137 (c_index,r_index,w,h)  #depth.shape==(720,1280,4)
+    x, y, z, coor = getObjectDepth_Nearest(depth, bounds)
+
+    row_central=bounds[1]
+    col_central=bounds[0]
+    h=bounds[3]
+    w=bounds[2]
+    # z gives the middle
+    # x,y gives the middle
+
+    #get detected involving space
+    z_range=[z,z+deep]
+    row_range=[int(row_central-h/2),int(row_central+h/2)]
+    col_range=[int(col_central-w/2),int(col_central+w/2)]
+    for i in range(2):
+        row_range[i]=clamp_row_index(row_range[i])
+        col_range[i]=clamp_col_index(col_range[i])
+
+    x_list=[] # x, col
+    y_list=[] # y, row
+    z_list=[]
+    c_list=[int(coor[1])]
+    r_list=[int(coor[0])]
+    for c in range(col_range[0],col_range[1]):
+        for r in range(row_range[0],row_range[1]):
+            i=r
+            j=c
+            z_new = depth[i, j, 2]
+            if(z_new>z_range[0] and z_new<z_range[1]):
+                #this point is valiable
+                x=depth[i, j, 0]
+                y=depth[i, j, 1]
+                x_list.append(x)
+                y_list.append(y)
+                z_list.append(z)
+                c_list.append(c)
+                r_list.append(r)
+
+    x_res=np.median(x_list)
+    y_res=np.median(y_list)
+    z_res=np.median(z_list)
+    c_res=np.median(c_list).astype(np.int)
+    r_res=np.median(r_list).astype(np.int)
+    coor=(r_res,c_res)
+    # print([r_res,c_res])
+    if np.sum(np.isnan([x_res,y_res,z_res]))>0:
+        return -1,-1,-1,coor
+    return x_res,y_res,z_res,[r_res,c_res]
+
+    # print("row_range,")
+    # return 1
+
 def getObjectDepth_2d_Centroid(depth, bounds):
     area_div = 2
 
@@ -475,6 +529,7 @@ def main(argv,global_db=None):
 
     mat = sl.Mat()
     point_cloud_mat = sl.Mat()
+    point_cloud_mat_DF = sl.Mat()
 
     # Import the global variables. This lets us instance Darknet once, then just call performDetect() again without instancing again
     global metaMain, netMain, altNames  # pylint: disable=W0603
@@ -556,11 +611,14 @@ def main(argv,global_db=None):
         if err == sl.ERROR_CODE.SUCCESS:
             cam.retrieve_image(mat, sl.VIEW.VIEW_LEFT)
             image = mat.get_data()
-
+            # cam.ret
             cam.retrieve_measure(
                 point_cloud_mat, sl.MEASURE.MEASURE_XYZRGBA)
+            cam.retrieve_measure(
+                point_cloud_mat_DF, sl.MEASURE.MEASURE_DEPTH)
+            depth_DF=point_cloud_mat_DF.get_data()
             depth = point_cloud_mat.get_data()
-
+            # point_cloud_mat.
             # Do the detection
             detections = detect(netMain, metaMain, image, thresh)
 
@@ -626,7 +684,8 @@ def main(argv,global_db=None):
                         data_list = ["bottle",1, x, y, z]
                     elif(label=="hand"):
 
-                        x, y, z,coor = getObjectDepth_Nearest(depth, bounds)
+                        # x, y, z,coor = getObjectDepth_Nearest(depth, bounds)
+                        x, y, z,coor = getObjectDepth_2d_av_Centroid(depth, bounds,5)
                         isfeast=isFeast(depth,bounds)
                         # print(x,y,z)
                         data_list = ["hand",1, x, y, z,isfeast]
@@ -648,6 +707,21 @@ def main(argv,global_db=None):
                 cv2.rectangle(image, (xCoord-thickness, yCoord-thickness), (xCoord + xEntent+thickness, yCoord+(18 +thickness*4)), color_array[detection[3]], -1)
                 cv2.putText(image, label+" " +"{:.2f}".format(confidence)+ " "+(str(distance) + " m")+(" x="+str(x))+(" y="+str(y))+(" z="+str(z)), (xCoord+(thickness*4), yCoord+(10 +thickness*4)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2)
                 cv2.rectangle(image, (xCoord-thickness, yCoord-thickness), (xCoord + xEntent+thickness, yCoord + yExtent+thickness), color_array[detection[3]], int(thickness*2))
+            banana_box=db.posecnn_banana_box
+            if(banana_box==[0,0,0,0]):
+                pass
+            else:
+                # xCoord=banana_box[1]
+                # yCoord=banana_box[0]
+                # xEntent=banana_box[2]
+                thickness = 1
+                yExtent = int(banana_box[3])
+                xEntent = int(banana_box[2])
+                # Coordinates are around the center
+                xCoord = int(banana_box[1])
+                yCoord = int(banana_box[0])
+                cv2.rectangle(image, (xCoord, yCoord),
+                          (xCoord + xEntent, yCoord +yExtent), (255,255,100), 2)
 
             # #click to set a point function
             # bounds = (db.click_cv_x,db.click_cv_y,5,5)
@@ -676,6 +750,8 @@ def main(argv,global_db=None):
             #             (255, 255, 255), 2)
 
             db.publish_cam_image(image)
+            db.publish_cam_depth(depth_DF)
+
             # db.cam_image=image
 
             #pid control part

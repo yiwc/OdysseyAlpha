@@ -11,6 +11,20 @@ import ZED_YOLO_Sensor
 import CYWMainWindow
 import cv2
 import AudioOperator as AO
+import multiprocessing
+import os
+from PyQt5 import QtCore, QtWidgets, uic
+
+import matplotlib
+matplotlib.use('QT5Agg')
+
+from matplotlib.figure import Figure
+# import matplotlib.pylab as plt
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_qt5agg import FigureCanvas
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
+import numpy as np
+from mpl_toolkits import mplot3d
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
     DetectedListClickedSig = pyqtSignal(int)
@@ -35,6 +49,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.updateInfoThread.updateInfoSig.connect(self.updateInfo)
         self.updateInfoThread.start()
 
+        self.updatePlotThread = updatePlotThread()
+        self.updatePlotThread.updatePlotSig.connect(self.updatePlot)
+        self.updatePlotThread.start()
+
         self.updateCVImgThread = updateCVImgThread()
         self.updateCVImgThread.updateCVImgSig.connect(self.updateCvImg)
         self.updateCVImgThread.start()
@@ -46,9 +64,62 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.CheckVoiceCheckingThread = CheckVoiceCheckingThread()
         self.CheckVoiceCheckingThread.CheckVoiceCheckingSig.connect(self.CheckVoiceChecking)
         self.CheckVoiceCheckingThread.start()
+
+        self.CheckROSChekcingThread = CheckROSChekcingThread()
+        self.CheckROSChekcingThread.CheckROSCheckingSig.connect(self.CheckROSChecking)
+        self.CheckROSChekcingThread.start()
+
         # self.Cam_bottle_label_title.setText("test")
 
+        self.main_widget = QWidget(self)
+        self.myplot = MyMplCanvas(self.main_widget)
 
+        # self.fig = plt.figure()
+        # self.ax = plt.axes(projection='3d')
+        # self.ax.plot([0,0],[0,0],[0,5],"r")
+        # self.ax.plot([0,5],[0,0],[0,0],"r")
+        # self.ax.plot([0,0],[0,5],[0,0],"r")
+        # self.plotWidget = FigureCanvas(self.fig)
+
+        lay = QtWidgets.QVBoxLayout(self.content_plot)
+        lay.setContentsMargins(0, 0, 0, 0)
+        # lay.addWidget(self.plotWidget)
+        lay.addWidget(self.myplot)
+        # add toolbar
+        # self.addToolBar(QtCore.Qt.BottomToolBarArea, NavigationToolbar(self.plotWidget, self))
+
+        # self.myplot = MyMplCanvas(self.main_widget)
+
+    def updatePlot(self):
+        if(self.checkBox_DFsensor_able.isChecked()):
+            # self.db.DF_sensor_able=1
+            if(self.db.DF_pred_matrix.size==0):
+                # print("DF_pred_matrix size =0")
+                # m = np.ones([4,4])/3
+                # self.draw_vectors(xs=m[1, :], ys=m[2, :], zs=m[3, :])
+                pass
+            else:
+                m=self.db.DF_pred_matrix
+                # m=np.linalg.inv(self.db.DF_pred_matrix)
+                self.draw_vectors(xs=m[1,:3],ys=m[2,:3],zs=m[3,:3])
+        # else:
+        #     self.db.DF_sensor_able=0
+    def draw_vectors(self,xs,ys,zs):
+
+        self.myplot.ax.cla()
+        # self.myplot.ax.plot([0,0],[0,0],[0,0.5],"r")
+        # self.myplot.ax.plot([0,0.5],[0,0],[0,0],"r")
+        # self.myplot.ax.plot([0,0],[0,0.5],[0,0],"r")
+        for i in range(len(xs)-1):
+            x=xs[i]
+            y=ys[i]
+            z=zs[i]
+            self.myplot.ax.plot([0,x],[0,y],[0,z],"r")
+        self.myplot.ax.plot([0,xs[-1]],[0,ys[-1]],[0,zs[-1]],"b")
+        self.myplot.draw()
+        # self.plotWidget.updateGeometry()
+        # self.plotWidget = FigureCanvas(self.fig)
+        # self.ax.plot([0,xs[0]])
     def initUI(self):
 
         self.DetectedListClickedSig.connect(self.DetectedListViewClicked)
@@ -57,9 +128,63 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.Mission2Button.clicked.connect(self.DoMission2)
         self.Mission3Button.clicked.connect(self.DoMission3)
         self.Mission4Button.clicked.connect(self.DoMission4)
+        self.ros_console_button.clicked.connect(self.ros_console)
+        self.ros_graph_button.clicked.connect(self.ros_graph)
+        self.ros_plot_button.clicked.connect(self.ros_plot)
+        self.ros_image_button.clicked.connect(self.ros_image)
+        self.ros_rqt_button.clicked.connect(self.ros_rqt)
+        self.ros_rviz_button.clicked.connect(self.ros_rviz)
+        self.ros_gazebo_button.clicked.connect(self.ros_gazebo)
         self.MissionAbsortButton.clicked.connect(self.AbsortMission)
         self.ControlRecoverButton.clicked.connect(self.RecoverControl)
         pass
+
+    def ros_gazebo(self):
+        def run():
+            os.system("gazebo")
+        q=multiprocessing.Process(target=run,args=())
+        q.start()
+    def ros_rviz(self):
+        def run():
+            os.system("rviz")
+        q=multiprocessing.Process(target=run,args=())
+        q.start()
+    def ros_console(self):
+        def run():
+            os.system("rqt_console")
+        q=multiprocessing.Process(target=run,args=())
+        q.start()
+    def ros_graph(self):
+        def run():
+            os.system("rqt_graph")
+        q=multiprocessing.Process(target=run,args=())
+        q.start()
+    def ros_plot(self):
+        def run():
+            os.system("rqt_plot")
+        q=multiprocessing.Process(target=run,args=())
+        q.start()
+    def ros_image(self):
+        def run():
+            os.system("rqt_image")
+        q=multiprocessing.Process(target=run,args=())
+        q.start()
+    def ros_rqt(self):
+        def run():
+            os.system("rqt")
+        q=multiprocessing.Process(target=run,args=())
+        q.start()
+    def CheckROSChecking(self):
+
+
+        ros_checkbox_checked=self.ROScheckBox.isChecked()
+        if(self.op.get_ros_publisher_running()):
+            # print("ROS is running!")
+            self.ROScheckBox.setChecked(1)
+        else:
+            if(ros_checkbox_checked):
+                print("start ros publisher!")
+                self.op.start_ros_publisher()
 
     def CheckVoiceChecking(self):
 
@@ -217,10 +342,17 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.Cam_cube_label_content_label.setText(str(self.db.get_target_cam_data_list("cube")))
         self.Cam_iiwa_label_content_label.setText(str(self.db.get_target_cam_data_list("iiwa")))
         self.Cam_hand_label_content_label.setText(str(self.db.get_target_cam_data_list("hand")))
-
+        if(self.checkBox_DFsensor_able.isChecked()):
+            self.db.DF_sensor_able=1
+        else:
+            self.db.DF_sensor_able=0
     def updateCvImg(self):
         # if()
-        image = self.db.get_cam_image()
+        if(self.checkBox_6DAble.isChecked()):
+            image = self.db.get_cam_image_with_mask()
+        else:
+            image = self.db.get_cam_image()
+
         try:
             # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             h, w, ch = image.shape
@@ -307,6 +439,19 @@ class updateInfoThread(QThread):
             time.sleep(0.1)
 
 
+class updatePlotThread(QThread):
+    updatePlotSig = pyqtSignal(bool)
+
+    def __init__(self):
+        super(updatePlotThread, self).__init__()
+
+    def run(self):
+        while 1:
+            self.updatePlotSig.emit(True)
+            # print("thread running +1")
+            time.sleep(0.5)
+
+
 class CheckVoiceCheckingThread(QThread):
 
     CheckVoiceCheckingSig=pyqtSignal(bool)
@@ -320,6 +465,19 @@ class CheckVoiceCheckingThread(QThread):
             # print("thread running +1")
             time.sleep(0.1)
 
+class CheckROSChekcingThread(QThread):
+
+    CheckROSCheckingSig=pyqtSignal(bool)
+
+    def __init__(self):
+        super(CheckROSChekcingThread, self).__init__()
+
+    def run(self):
+        while 1:
+            self.CheckROSCheckingSig.emit(True)
+            # print("thread running +1")
+            time.sleep(0.1)
+
 
 def MainThread(sys_argv, db=None, op=None, ct=None,ao=None):
     # print("main thread running")
@@ -329,6 +487,28 @@ def MainThread(sys_argv, db=None, op=None, ct=None,ao=None):
     # print("here")
     sys.exit(app.exec_())
 
+class MyMplCanvas(FigureCanvas):
+
+    def __init__(self, parent=None):
+        # self.fig = Figure()
+        # self.axes = self.fig.add_subplot(111)
+        # plot empty line
+        # self.line, = self.axes.plot([],[], color="orange")
+
+        self.fig = plt.figure()
+        self.ax = plt.axes(projection='3d')
+        self.ax.plot([0,0],[0,0],[0,0.5],"r")
+        self.ax.plot([0,0.5],[0,0],[0,0],"r")
+        self.ax.plot([0,0],[0,0.5],[0,0],"r")
+        # self.plotWidget = FigureCanvas(self.fig)
+
+
+
+        FigureCanvas.__init__(self, self.fig)
+        self.setParent(parent)
+
+        FigureCanvas.setSizePolicy(self, QSizePolicy.Expanding, QSizePolicy.Expanding)
+        FigureCanvas.updateGeometry(self)
 
 if __name__ == "__main__":
     # #init db

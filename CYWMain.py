@@ -1,12 +1,13 @@
-import CYW_RemoteControl2_2 as CYW_RemoteControl
+import CYW_RemoteControl2_3 as CYW_RemoteControl
 import ZED_YOLO_Sensor
+import ZED_DF_Sensor
 import CYWMainWindow
 import sys
 import threading
 import time
 import sys
 import AudioOperator as AO
-
+import multiprocessing
 
 if __name__=="__main__":
 
@@ -34,6 +35,12 @@ if __name__=="__main__":
     ZED_YOLO_Sensor_Thread=threading.Thread(target=ZED_YOLO_Sensor.main,args=(sys.argv[1:],db))
     ZED_YOLO_Sensor_Thread.start()
 
+    #Start ZED_DF_Sensor Thread
+    #db.cam_ will be updated while running the thread.
+    ZED_DF_Sensor_Thread=threading.Thread(target=ZED_DF_Sensor.main,args=(db,))
+    ZED_DF_Sensor_Thread.start()
+    print("ZED_DF_Sensor.py START!")
+
     #Holding at a safe place, to keep connection
     #Thread can be temply interupt by setting db.holding_at_safe_pos_switch=False
     holding_at_safe_pos_Thread=threading.Thread(target=ct.holding_at_safe_pos,args=())
@@ -48,9 +55,17 @@ if __name__=="__main__":
     # ct.Mission1_Pick_and_Place(target_name="cube")
     # db.publish_holding_at_safe_pose_switch(1)
     # ct.holding_at_safe_pos()
+
+    #Start ROS CORE
+    # def roscore():
+    #     os.system("roscore")
+    # roscore_p=multiprocessing.Process(target=roscore,args=())
+    # roscore_p.start()
+    # print("roscore start")
+
     while(1):
         time.sleep(1)
-
+    
 
 
 

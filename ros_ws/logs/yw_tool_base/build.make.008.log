@@ -1,0 +1,17 @@
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_eus
+Traceback (most recent call last):
+  File "/opt/ros/kinetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py", line 54, in <module>
+    spec = load_msg_from_file(msg_context, msg_file, full_type_name)
+  File "/opt/ros/kinetic/lib/python2.7/dist-packages/genmsg/msg_loader.py", line 284, in load_msg_from_file
+    with open(file_path, 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/home/evan/zed_python/cyw_zed_yolo_3d/ros_ws/src/yw_tool_base/msg/db.msg'
+CMakeFiles/_yw_tool_base_generate_messages_check_deps_db.dir/build.make:57: recipe for target 'CMakeFiles/_yw_tool_base_generate_messages_check_deps_db' failed
+make[2]: *** [CMakeFiles/_yw_tool_base_generate_messages_check_deps_db] Error 1
+CMakeFiles/Makefile2:808: recipe for target 'CMakeFiles/_yw_tool_base_generate_messages_check_deps_db.dir/all' failed
+make[1]: *** [CMakeFiles/_yw_tool_base_generate_messages_check_deps_db.dir/all] Error 2
+Makefile:138: recipe for target 'all' failed
+make: *** [all] Error 2

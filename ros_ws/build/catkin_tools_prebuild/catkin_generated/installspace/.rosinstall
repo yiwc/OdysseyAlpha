@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/evan/zed_python/cyw_zed_yolo_3d/ros_ws/install/setup.sh

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>YOLO-DEPTH Grap System (Author: Chen Yiwen cywgoog@gmail.com)</string>
+   <string>A.R.C Intelligent Grasping Robotics System (Author: Chen Yiwen cywgoog@gmail.com)</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QGroupBox" name="groupBox">
@@ -115,8 +115,8 @@
    <widget class="QGroupBox" name="CamImgGroup">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>230</y>
+      <x>40</x>
+      <y>430</y>
       <width>681</width>
       <height>431</height>
      </rect>
@@ -176,7 +176,7 @@
     <property name="geometry">
      <rect>
       <x>800</x>
-      <y>30</y>
+      <y>10</y>
       <width>111</width>
       <height>27</height>
      </rect>
@@ -256,8 +256,8 @@
    <widget class="QPushButton" name="MissionAbsortButton">
     <property name="geometry">
      <rect>
-      <x>1060</x>
-      <y>480</y>
+      <x>1080</x>
+      <y>580</y>
       <width>141</width>
       <height>91</height>
      </rect>
@@ -300,8 +300,8 @@ Be Sure Only one hand  in camera</string>
    <widget class="QPushButton" name="ControlRecoverButton">
     <property name="geometry">
      <rect>
-      <x>1060</x>
-      <y>570</y>
+      <x>1080</x>
+      <y>670</y>
       <width>141</width>
       <height>27</height>
      </rect>
@@ -396,6 +396,19 @@ Be Sure Only one hand  in camera</string>
      <string>Mission 4 Hand Remote Control</string>
     </property>
    </widget>
+   <widget class="QWidget" name="content_plot" native="true">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>230</y>
+      <width>301</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="text" stdset="0">
+     <string>content_plot</string>
+    </property>
+   </widget>
    <widget class="QTextBrowser" name="VoiceTextBrowser">
     <property name="geometry">
      <rect>
@@ -414,6 +427,12 @@ Be Sure Only one hand  in camera</string>
       <width>101</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>Voice</string>
@@ -458,6 +477,277 @@ Be Sure Only one hand  in camera</string>
      <string>Speaking</string>
     </property>
    </widget>
+   <widget class="QCheckBox" name="ROScheckBox">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>40</y>
+      <width>211</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Publish to ROS</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>1050</x>
+      <y>330</y>
+      <width>181</width>
+      <height>231</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>ROS TOOLS</string>
+    </property>
+    <widget class="QPushButton" name="ros_console_button">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>71</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>console</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ros_graph_button">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>71</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>graph</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ros_plot_button">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>71</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>plot</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ros_image_button">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>110</y>
+       <width>71</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>image</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ros_rqt_button">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>140</y>
+       <width>71</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>rqt</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ros_rviz_button">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>20</y>
+       <width>71</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Rviz</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ros_gazebo_button">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>50</y>
+       <width>71</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Gazebo</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="formLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>230</y>
+      <width>181</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout_2">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Joint Speed</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="text">
+        <string>0.1</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Max Force</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="lineEdit_2">
+       <property name="text">
+        <string>15</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Robot Name</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="lineEdit_3">
+       <property name="text">
+        <string>IIWA</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>210</y>
+      <width>673</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Parameters (Testing)</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="formLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>230</y>
+      <width>181</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout_3">
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="lineEdit_4">
+       <property name="text">
+        <string>2.55</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>para2</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="lineEdit_5">
+       <property name="text">
+        <string>3.48</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>para3</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="lineEdit_6">
+       <property name="text">
+        <string>552.1</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>para1</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_6DAble">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>370</y>
+      <width>291</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string> Show 6D Estimation</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_DFsensor_able">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>340</y>
+      <width>171</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>6D Estimation</string>
+    </property>
+   </widget>
+   <zorder>content_plot</zorder>
    <zorder>CamImgGroup</zorder>
    <zorder>groupBox</zorder>
    <zorder>DetectedItemsLabel</zorder>
@@ -480,6 +770,13 @@ Be Sure Only one hand  in camera</string>
    <zorder>VoiceControlCheckBox</zorder>
    <zorder>VoiceListenCheckBox</zorder>
    <zorder>SpeakingLabel</zorder>
+   <zorder>ROScheckBox</zorder>
+   <zorder>groupBox_2</zorder>
+   <zorder>formLayoutWidget_2</zorder>
+   <zorder>label_3</zorder>
+   <zorder>formLayoutWidget_3</zorder>
+   <zorder>checkBox_6DAble</zorder>
+   <zorder>checkBox_DFsensor_able</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -487,7 +784,7 @@ Be Sure Only one hand  in camera</string>
      <x>0</x>
      <y>0</y>
      <width>1246</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

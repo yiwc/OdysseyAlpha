@@ -1,0 +1,4 @@
+The dependencies of the message/service 'yw_tool_base/db' have changed. Please rerun cmake.
+make[2]: *** [CMakeFiles/_yw_tool_base_generate_messages_check_deps_db] Error 1
+make[1]: *** [CMakeFiles/_yw_tool_base_generate_messages_check_deps_db.dir/all] Error 2
+make: *** [all] Error 2

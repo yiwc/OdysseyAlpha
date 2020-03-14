@@ -3,5 +3,8 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/DenseFusion/tools/posecnn/PoseCNN" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/DenseFusion/tools/posecnn/PoseCNN_PyTorch" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/DenseFusion/tools/posecnn/maskrcnn-benchmark" vcs="Git" />
   </component>
 </project>

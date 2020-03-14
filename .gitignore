@@ -1,2 +1,18 @@
 # Project exclude paths
 /venv/
+
+*.weights
+*.tar
+*.pth
+
+#datasets
+DenseFusion_src
+DenseFusion/datasets/yw_test/*.7z
+DenseFusion/datasets/yw_test/*.tar
+
+#checkpoints
+DenseFusion/trained_checkpoints
+DenseFusion/trained_models
+
+#others
+DenseFusion_src

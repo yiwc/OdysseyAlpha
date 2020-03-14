@@ -1,0 +1,12 @@
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_lisp
+The dependencies of the message/service 'yw_tool_base/db' have changed. Please rerun cmake.
+CMakeFiles/_yw_tool_base_generate_messages_check_deps_db.dir/build.make:57: recipe for target 'CMakeFiles/_yw_tool_base_generate_messages_check_deps_db' failed
+make[2]: *** [CMakeFiles/_yw_tool_base_generate_messages_check_deps_db] Error 1
+CMakeFiles/Makefile2:808: recipe for target 'CMakeFiles/_yw_tool_base_generate_messages_check_deps_db.dir/all' failed
+make[1]: *** [CMakeFiles/_yw_tool_base_generate_messages_check_deps_db.dir/all] Error 2
+Makefile:138: recipe for target 'all' failed
+make: *** [all] Error 2

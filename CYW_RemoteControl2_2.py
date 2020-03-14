@@ -8,6 +8,12 @@ import socket
 import random
 import time
 import threading
+import rospy
+import numpy as np
+from learning_topic.msg import Person
+from yw_tool_base.msg import db as db_msg
+import os
+import multiprocessing
 
 class funcs():
     @staticmethod
@@ -87,6 +93,10 @@ class operator():
                              socket.SOCK_DGRAM) # UDP
         self.my_address=("172.31.1.40",12358)
         # self.sock.bind(self.my_address)
+
+        self.ros_publisher_able=0
+        self.ros_publisher_running=0
+
         pass
     def send_cont(self,MESSAGE=b'123456789'):
         UDP_IP = self.iiwa_ip
@@ -227,6 +237,73 @@ class operator():
         for i in range(len(float_list)):
             float_list[i]=round(float(float_list[i]),4)
         return float_list
+
+    ##ROS
+    def ros_publisher(self):
+        os.system("python ros_ws/src/yw_tool_base/src/ros_publisher.py")
+    def start_ros_publisher(self):
+
+        self.ros_publisher_running=1
+        p1=multiprocessing.Process(target=self.ros_publisher,args=())
+        p1.start()
+        print("start pub")
+
+    def get_ros_publisher_running(self):
+        return self.ros_publisher_running
+        #
+        # if(self.ros_publisher_running):
+        #     print("ROS publisher is already running")
+        # else:
+        #     self.ros_publisher_able=1 # for keep publisher running
+        #     self.ros_publisher()
+
+    # def run_ros_publisher(self): # keep it running, if it not run, start it
+    #     if(self.ros_publisher_running)
+    def stop_ros_publisher(self):
+        self.ros_publisher_able=0
+
+    # def ros_publisher(self):
+    #     print("in ros publisher")
+    #     try:
+    #         # ROS节点初始化
+    #         # rospy.init_node('person_publisher', anonymous=True)
+    #         rospy.init_node('cyw_iiwa_publisher', anonymous=True)
+    #
+    #         # 创建一个Publisher，发布名为/person_info的topic，消息类型为learning_topic::Person，队列长度10
+    #         iiwa_info_pub = rospy.Publisher('/yw_iiwa_topic', db, queue_size=10)
+    #
+    #         # 设置循环的频率
+    #         rate = rospy.Rate(10)
+    #
+    #         while (not rospy.is_shutdown() and self.ros_publisher_able==1):
+    #
+    #             self.ros_publisher_running=1
+    #             # 初始化learning_topic::Person类型的消息
+    #             # person_msg = Person()
+    #             # person_msg.name = "Tom"
+    #             # person_msg.age  = 15
+    #             # person_msg.sex  = Person.male
+    #             db_msg = db()
+    #             db_msg.x = random.randint(1, 5)
+    #             db_msg.y = random.randint(1, 5)
+    #             db_msg.z = random.randint(1, 5)
+    #             # 发布消息
+    #             iiwa_info_pub.publish(db_msg)
+    #             rospy.loginfo("Publsh IIWA message[%f, %f, %f]",
+    #                           db_msg.x, db_msg.y, db_msg.z)
+    #             print("publisher running")
+    #             # 按照循环频率延时
+    #             rate.sleep()
+    #         self.ros_publisher_running=0
+    #     except Exception as error:
+    #         print (error)
+    #         self.ros_publisher_running=0
+    #         print("ros error")
+
+        # except rospy.ROSInterruptException:
+        #     pass
+
+
 class global_database():
     # this database is shared with iiwa through udp
     def __init__(self):
@@ -466,6 +543,10 @@ class global_database():
 
     def publish_cam_image(self,image):
         self.cam_image=image
+
+    def publish_cam_depth(self,depth):
+        self.cam_depth=depth
+
     def get_cam_image(self):
         return self.cam_image
 

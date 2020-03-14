@@ -1,0 +1,1 @@
+data/LOV/models/010_potted_meat_can/textured.obj

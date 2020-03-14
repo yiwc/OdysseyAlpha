@@ -1,0 +1,8 @@
+prefix=/home/evan/zed_python/cyw_zed_yolo_3d/ros_ws/devel/.private/yw_tool_base
+
+Name: yw_tool_base
+Description: Description of yw_tool_base
+Version: 0.0.0
+Cflags: -I/home/evan/zed_python/cyw_zed_yolo_3d/ros_ws/devel/.private/yw_tool_base/include
+Libs: -L/home/evan/zed_python/cyw_zed_yolo_3d/ros_ws/devel/.private/yw_tool_base/lib 
+Requires: geometry_msgs roscpp rospy std_msgs message_runtime

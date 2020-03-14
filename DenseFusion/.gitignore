@@ -1,0 +1,4 @@
+*.idea
+trained_checkpoints
+datasets
+trained_models
